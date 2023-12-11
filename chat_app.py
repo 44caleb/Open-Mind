@@ -18,7 +18,7 @@ Session(app)
 
 # data is temporarily stored in this variables before json file storage
 
-
+messages=[]
 
 @app.route("/register", methods=["GET", "POST"])
 def register_user():
@@ -198,9 +198,19 @@ def get_rooms(space):
 
 
 @app.route("/get_messages/<space>")
-def get_messages(space):
+def get_messages2(space):
     room_messages = []
     for message in stored_data["messages"]:
+        if message["space"] == space:
+            room_messages.append(message)
+    return jsonify(room_messages)
+
+
+
+@app.route("/get_messages2/<space>")
+def get_messages(space):
+    room_messages = []
+    for message in messages:
         if message["space"] == space:
             room_messages.append(message)
     return jsonify(room_messages)
@@ -223,6 +233,10 @@ def send_message(data):
     time_sent = datetime.now().strftime("%m/%d/%Y   %I:%M %p")
     print(time_sent)
     stored_data["messages"].append({"message": data["message"], "room": data["room"],
+                    "sender": data["sender"], "space": data["space"],
+                    "time": time_sent})
+
+    messages.append({"message": data["message"], "room": data["room"],
                     "sender": data["sender"], "space": data["space"],
                     "time": time_sent})
     save_data(file, stored_data)
