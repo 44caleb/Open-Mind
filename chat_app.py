@@ -197,6 +197,14 @@ def get_rooms(space):
     return jsonify(user_rooms)
 
 
+@app.route("/get_messages/<space>")
+def get_messages(space):
+    room_messages = []
+    for message in stored_data["messages"]:
+        if message["space"] == space:
+            room_messages.append(message)
+    return jsonify(room_messages)
+
 #....................socket events.......................
 
 @socketio.on("connect")
@@ -228,7 +236,7 @@ def joined_space(space):
 @socketio.on("joined_room")
 def joined_room(data):
     print("these are all the message in total serverside...............", stored_data["messages"])
-    room_messages = []
+    room_messages=[]
     #load the messages from a particular room
     for message in stored_data["messages"]:
         if data["room"] == message["room"] and data["space"] == message["space"]:
