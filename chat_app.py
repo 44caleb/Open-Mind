@@ -168,7 +168,11 @@ def logout():
 @app.route("/user_data")
 def user_data():
     """gets user's last space and room"""
-    user_data = {"latest_space": session["latest_space"], "latest_room": session["latest_room"]}
+    room_messages = []
+    for message in stored_data["messages"]:
+        if session["latest_room"] == message["room"] and session["latest_space"] == message["space"]:
+            room_messages.append(message)
+    user_data = {"latest_space": session["latest_space"], "latest_room": session["latest_room"], "room_messages": room_messages}
     return jsonify(user_data)
 
 @app.route("/check_space/<space_name>")
