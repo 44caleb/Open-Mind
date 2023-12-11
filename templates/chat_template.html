@@ -58,12 +58,12 @@
     socket.on("connected", function(data) {
         user = data;
         console.log("now connected.....", user);
-
+        socket.emit("joined_room", {room: "room 1", space: "Programming"});
 
 
 
         //fetch user data
-    fetch("/user_data")
+    /*fetch("/user_data")
         .then(response => response.json())
         .then(data => {
             console.log("latest room......", data["latest_room"])
@@ -114,7 +114,7 @@
                 }
             });
         } 
-        })
+        })*/
     })
 
     
