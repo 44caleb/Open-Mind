@@ -223,12 +223,17 @@ def joined_space(space):
 
 @socketio.on("joined_room")
 def joined_room(data):
+    print("these are all the message in total serverside...............", stored_data["messages"])
     room_messages = []
     #load the messages from a particular room
     for message in stored_data["messages"]:
         if data["room"] == message["room"] and data["space"] == message["space"]:
             room_messages.append(message)
+
+    #update latest room
     session["latest_room"] = data["room"]
+    print()
+    print("these are the room_messages on serverside...............", room_messages)
     emit("load_message", room_messages)
 
 
