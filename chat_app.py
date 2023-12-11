@@ -209,10 +209,13 @@ def get_messages2(space):
 
 @app.route("/get_messages2/<space>")
 def get_messages(space):
+    print('THIS IS THE OG MESSAGE LIST............', messages)
     room_messages = []
     for message in messages:
         if message["space"] == space:
             room_messages.append(message)
+            print("I APPENDED THE MESSAGES......................")
+    print("THESE ARE all THE MESSAGES IN THE API2 ROOM AFTER APPENDING", room_messages)
     return jsonify(room_messages)
 
 #....................socket events.......................
@@ -239,6 +242,7 @@ def send_message(data):
     messages.append({"message": data["message"], "room": data["room"],
                     "sender": data["sender"], "space": data["space"],
                     "time": time_sent})
+    print('I HAVE JUST STORED THE SENT MESSAGES.THIS IS THE UPDATED MESSAGE LIST..............', messages)
     save_data(file, stored_data)
     emit("broadcast_messages", {"message": data["message"], "sender": data["sender"], "time": time_sent}, to=data["room"])
 
