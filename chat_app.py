@@ -8,7 +8,7 @@ from datetime import datetime
 from data_store import file, stored_data, save_data
 
 app = Flask(__name__)
-app.config["DEBUG"] = False
+app.config["DEBUG"] = True
 app.config["SECRET_KEY"] = "SDSDKFLNks12dwqasdsdf"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -217,6 +217,16 @@ def get_messages(space):
             print("I APPENDED THE MESSAGES......................")
     print("THESE ARE all THE MESSAGES IN THE API2 ROOM AFTER APPENDING", room_messages)
     return jsonify(room_messages)
+
+@app.route("/add_messages", methods=["POST"])
+def add_messages():
+    
+    print("IN ADD MESSAGES ENDPOINT...............")
+    data = request.get_json()
+    print(data)
+    messages.append(data)
+    stored_data["messages"].append(data)
+    return jsonify(data)
 
 #....................socket events.......................
 
