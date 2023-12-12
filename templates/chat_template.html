@@ -58,16 +58,13 @@
     socket.on("connected", function(data) {
         user = data;
         console.log("now connected.....", user);
-        socket.emit("joined_room", {room: "room 1", space: "Programming"});
-
-
 
         //fetch user data
-    /*fetch("/user_data")
+        fetch("/user_data")
         .then(response => response.json())
         .then(data => {
             console.log("latest room......", data["latest_room"])
-            //socket.emit("joined_room", {room: data["latest_room"], space: data["latest_space"]})
+            socket.emit("joined_room", {room: data["latest_room"], space: data["latest_space"]})
             space_name = data["latest_space"]
             room = data["latest_room"]
 
@@ -76,45 +73,7 @@
 
             $(`[data-room_id="${data['latest_room']}"]`).toggleClass("highlight-room");
 
-
-
-
-
-
-            console.log("ccccccccccc", data["room_messages"]);
-        
-        $("#chatspace").html("");
-
-        if (data["room_messages"].length == 0) {
-            console.log("no data");
-            $("#chatspace").html("<p class='default-message'>NO MESSAGES YET. START THE CONVERSATION...<p>");
-        }
-        else {
-            $.each(data["room_messages"], function(index, value) {
-                console.log("value is", value);
-                console.log("sender is", value.sender);
-                console.log("index is", index);
-                if (value.sender == user) {
-                    $("#chatspace").append(`
-                    <div class="message-box">
-                    <p class="message-sender">${value.sender}</p>
-                    <p class="message">${value.message}</p>
-                    <p class="message-time">${value.time}
-                    </div>
-                `);
-                }
-                else {
-                    $("#chatspace").append(`
-                    <div style="float: left; background-color: rgb(125, 136, 176);" class="message-box"
-                    <p class="message-sender">${value.sender}</p>
-                    <p class="message">${value.message}</p>
-                    <p class="message-time">${value.time}
-                    </div>
-                `);
-                }
-            });
-        } 
-        })*/
+        })
     })
 
     
