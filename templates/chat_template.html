@@ -54,7 +54,7 @@
 
 
     console.log("about to connect", user);
-    socket = io({transports: ["websocket"]});
+    socket = io();
     socket.on("connected", function(data) {
         user = data;
         console.log("now connected.....", user);
